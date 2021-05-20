@@ -29,6 +29,8 @@ class PreviewActivity : AppCompatActivity() {
 
         loadImage()
         // Set listener for the button
+        setButtonCancelListener()
+        setButtonSendListener()
     }
 
     private fun initAppBar() {
