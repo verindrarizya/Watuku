@@ -1,6 +1,7 @@
 <resources>
     <string name="app_name">Watuku</string>
     <string name="fab_camera_capture_content_description">FAB Camera Capture</string>
+    <string name="application_logo">Application Logo</string>
     <string name="send">Send</string>
     <string name="cancel">Cancel</string>
     <string name="preview">Preview</string>
