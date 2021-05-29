@@ -14,6 +14,7 @@
         android:src="@drawable/ic_camera_white_24"
         android:backgroundTint="@color/blue_sky"
         android:outlineProvider="none"
+        app:tint="@android:color/white"
         app:borderWidth="0dp"
         app:fabSize="normal"
         app:layout_constraintEnd_toEndOf="parent"

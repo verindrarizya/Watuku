@@ -24,11 +24,11 @@
         </activity>
         <activity android:name=".PreviewActivity"
             android:configChanges="orientation"
-            android:screenOrientation="fullSensor"/>
+            android:screenOrientation="portrait"/>
         <activity
             android:name=".CameraActivity"
             android:configChanges="orientation"
-            android:screenOrientation="fullSensor"
+            android:screenOrientation="portrait"
             android:parentActivityName=".SplashScreenActivity"/>
 <!--            <intent-filter>-->
 <!--                <action android:name="android.intent.action.MAIN" />-->

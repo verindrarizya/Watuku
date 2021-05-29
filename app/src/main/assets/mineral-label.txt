@@ -1,0 +1,7 @@
+biotite
+bornite
+chrysocolla
+malachite
+muscovite
+pyrite
+quartz
