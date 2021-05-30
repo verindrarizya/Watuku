@@ -16,7 +16,6 @@
         android:outlineProvider="none"
         app:tint="@android:color/white"
         app:borderWidth="0dp"
-        app:fabSize="normal"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -26,5 +25,19 @@
         android:id="@+id/view_finder"
         android:layout_width="match_parent"
         android:layout_height="match_parent" />
+
+    <ImageButton
+        android:id="@+id/btn_gallery"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:padding="20dp"
+        android:layout_marginStart="12dp"
+        android:tint="@color/blue_500"
+        android:contentDescription="@string/open_gallery_content_description"
+        app:layout_constraintBottom_toBottomOf="@+id/fab_camera_capture"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/fab_camera_capture"
+        app:layout_constraintTop_toTopOf="@+id/fab_camera_capture"
+        app:srcCompat="@drawable/ic_gallery_white_24" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

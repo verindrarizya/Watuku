@@ -46,6 +46,8 @@ class CameraActivity : AppCompatActivity() {
 
         binding.fabCameraCapture.setOnClickListener { takePhoto() }
 
+        binding.btnGallery.setOnClickListener { chooseImage() }
+
         outputDirectory = getOutputDirectory()
     }
 
@@ -56,6 +58,10 @@ class CameraActivity : AppCompatActivity() {
             binding.root.systemUiVisibility = FLAGS_FULLSCREEN
         }, 500L)
     }
+
+    /**
+     * Camera
+     */
 
     private fun startCamera() {
         val cameraProviderFuture = ProcessCameraProvider.getInstance(this)
@@ -109,7 +115,7 @@ class CameraActivity : AppCompatActivity() {
                     triggerMediaScanner(savedUri)
 
                     // Then move to preview activity with uri to load the photo
-                    moveToPreviewActivity(savedUri)
+                    moveToPreviewActivity(savedUri, PreviewActivity.FLAG_CAMERA)
                 }
 
                 override fun onError(exception: ImageCaptureException) {
@@ -155,9 +161,12 @@ class CameraActivity : AppCompatActivity() {
         }
     }
 
-    private fun moveToPreviewActivity(uri: Uri) {
-        val intent = Intent(this@CameraActivity, PreviewActivity::class.java)
-        intent.putExtra(PreviewActivity.EXTRA_IMAGE_PREVIEW, uri.toString())
+    private fun moveToPreviewActivity(uri: Uri, codeFlag: Int) {
+        val intent = Intent(this@CameraActivity, PreviewActivity::class.java).apply {
+            putExtra(PreviewActivity.EXTRA_IMAGE_PREVIEW, uri.toString())
+            putExtra(PreviewActivity.EXTRA_FLAG, codeFlag)
+        }
+
         startActivity(intent)
     }
 
@@ -176,6 +185,30 @@ class CameraActivity : AppCompatActivity() {
         }
     }
 
+    /**
+     * Gallery
+     */
+
+    private fun chooseImage() {
+        val intent = Intent().apply {
+            setType("image/*")
+            setAction(Intent.ACTION_GET_CONTENT)
+        }
+
+        startActivityForResult(Intent.createChooser(intent, CHOOSER_TITLE), REQUEST_CODE_GALLERY)
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+
+        if (requestCode == REQUEST_CODE_GALLERY && resultCode == RESULT_OK) {
+            val selectedImageUri = data?.data
+            Log.d(TAG, "SelectedImage: $selectedImageUri")
+            selectedImageUri?.let {
+                moveToPreviewActivity(it, PreviewActivity.FLAG_GALLERY)
+            }
+        }
+    }
 
     companion object {
         private const val TAG = "WatukuCameraActivity"
@@ -185,6 +218,9 @@ class CameraActivity : AppCompatActivity() {
 
         private const val REQUEST_CODE_PERMISSIONS = 10
         private val REQUIRED_PERMISSIONS = arrayOf(Manifest.permission.CAMERA)
+
+        private const val REQUEST_CODE_GALLERY = 100
+        private const val CHOOSER_TITLE = "Select Picture"
 
         private const val FLAGS_FULLSCREEN = View.SYSTEM_UI_FLAG_LOW_PROFILE or
                 View.SYSTEM_UI_FLAG_FULLSCREEN or

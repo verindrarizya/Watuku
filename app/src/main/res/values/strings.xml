@@ -5,4 +5,5 @@
     <string name="send">Send</string>
     <string name="cancel">Cancel</string>
     <string name="preview">Preview</string>
+    <string name="open_gallery_content_description">Open Gallery</string>
 </resources>

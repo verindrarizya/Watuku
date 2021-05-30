@@ -10,6 +10,7 @@ import android.os.Bundle
 import android.provider.MediaStore
 import android.util.Log
 import android.view.KeyEvent
+import android.view.View
 import android.widget.Toast
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
@@ -20,10 +21,11 @@ import org.tensorflow.lite.support.image.TensorImage
 import org.tensorflow.lite.support.tensorbuffer.TensorBuffer
 import java.io.File
 
-class PreviewActivity : AppCompatActivity() {
+class PreviewActivity : AppCompatActivity(), View.OnClickListener {
 
     private lateinit var binding: ActivityPreviewBinding
     private lateinit var uri: Uri
+    private var codeFlag = 0
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -33,14 +35,18 @@ class PreviewActivity : AppCompatActivity() {
         initAppBar()
 
         val data = intent.extras
-        uri = Uri.parse(data?.getString(EXTRA_IMAGE_PREVIEW))
+        if (data != null) {
+            uri = Uri.parse(data.getString(EXTRA_IMAGE_PREVIEW))
+            codeFlag = data.getInt(EXTRA_FLAG)
+        }
         Log.d(TAG, "Get Uri from intent: $uri")
+        Log.d(TAG, "FLAG VALUE: $codeFlag")
 
         loadImage()
 
         // Set listener for the button
-        setButtonCancelListener()
-        setButtonSendListener()
+        binding.buttonCancel.setOnClickListener(this)
+        binding.buttonSend.setOnClickListener(this)
     }
 
     private fun initAppBar() {
@@ -57,19 +63,19 @@ class PreviewActivity : AppCompatActivity() {
                 .into(binding.imgPreview)
     }
 
-    private fun setButtonCancelListener() {
-        binding.buttonCancel.setOnClickListener {
-            deleteImage()
-            finish()
-        }
-    }
+    override fun onClick(v: View?) {
+        when(v?.id) {
+            binding.buttonCancel.id -> {
+                deleteImage()
+                finish()
+            }
 
-    private fun setButtonSendListener() {
-        binding.buttonSend.setOnClickListener {
-            Toast.makeText(this, "Processing", Toast.LENGTH_SHORT).show()
-            val index = getIndexLabelFromTfLite()
-            val label = getLabel(index)
-            Log.d(TAG, "Label: $label")
+            binding.buttonSend.id -> {
+                Toast.makeText(this, "Processing", Toast.LENGTH_SHORT).show()
+                val index = getIndexLabelFromTfLite()
+                val label = getLabel(index)
+                Log.d(TAG, "Label: $label")
+            }
         }
     }
 
@@ -87,6 +93,10 @@ class PreviewActivity : AppCompatActivity() {
     }
 
     private fun deleteImage() {
+
+        // If flagCode is Gallery then don;t delete, so folder in gallery not deleted
+        if (codeFlag == FLAG_GALLERY) return
+
         // Get file from Uri
         val photoFile = File(uri.path)
 
@@ -131,7 +141,7 @@ class PreviewActivity : AppCompatActivity() {
         val max = outputArray.maxOrNull()
         Log.d(TAG, "max: $max")
         val maxIndex = outputArray.indexOfFirst { it == max }
-        Log.d(TAG, "Index: ${maxIndex.toString()}")
+        Log.d(TAG, "Index: $maxIndex")
 
         // Close model to prevent memory leaks
         tfModel.close()
@@ -157,6 +167,11 @@ class PreviewActivity : AppCompatActivity() {
 
     companion object {
         private const val TAG = "CheckingPreviewActivity"
+
         const val EXTRA_IMAGE_PREVIEW = "extra_image_preview"
+        const val EXTRA_FLAG = "extra_flag"
+
+        const val FLAG_CAMERA = 20
+        const val FLAG_GALLERY = 21
     }
 }
