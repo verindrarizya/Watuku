@@ -2,14 +2,15 @@ package com.capstone.watuku.detail
 
 
 import androidx.lifecycle.ViewModel
+import com.capstone.watuku.model.WatuResource
 
 class DetailViewModel : ViewModel() {
-    private var _detailWatu = WatuRecources()
+    private var _detailWatu = WatuResource()
 
-    fun setDataDummy(watu: WatuRecources) {
+    fun setDataDummy(watu: WatuResource) {
         _detailWatu = watu
     }
 
-    fun getDataDummy() : WatuRecources = _detailWatu
+    fun getDataDummy() : WatuResource = _detailWatu
 
 }

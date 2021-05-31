@@ -1,4 +1,6 @@
-package com.capstone.watuku.detail
+package com.capstone.watuku.util
+
+import com.capstone.watuku.model.WatuResource
 
 
 object DataDummy {
@@ -50,15 +52,15 @@ object DataDummy {
 
     )
 
-    val listData: ArrayList<WatuRecources>
+    val listData: ArrayList<WatuResource>
         get() {
-            val list = arrayListOf<WatuRecources>()
+            val list = arrayListOf<WatuResource>()
             for (position in listTitle.indices) {
-                val watu = WatuRecources(
+                val watu = WatuResource(
                     listTitle[position],
+                    listImage[position],
                     listDefinition[position],
-                    listUsage[position],
-                    listImage[position]
+                    listUsage[position]
                 )
                 list.add(watu)
             }

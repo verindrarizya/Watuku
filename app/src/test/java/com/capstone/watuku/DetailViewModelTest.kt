@@ -1,6 +1,6 @@
 package com.capstone.watuku
 
-import com.capstone.watuku.detail.DataDummy
+import com.capstone.watuku.util.DataDummy
 import com.capstone.watuku.detail.DetailViewModel
 import org.junit.Assert
 import org.junit.Before

@@ -1,5 +1,6 @@
 package com.capstone.watuku
 
+import android.content.Intent
 import android.graphics.Bitmap
 import android.graphics.ImageDecoder
 import android.media.MediaScannerConnection
@@ -15,7 +16,11 @@ import android.widget.Toast
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
 import com.capstone.watuku.databinding.ActivityPreviewBinding
+import com.capstone.watuku.detail.DetailActivity
+import com.capstone.watuku.detail.DetailActivity.Companion.EXTRA_WATU_DETAIL
 import com.capstone.watuku.ml.MineralModel
+import com.capstone.watuku.model.WatuResource
+import com.capstone.watuku.util.DataDummy.listData
 import org.tensorflow.lite.DataType
 import org.tensorflow.lite.support.image.TensorImage
 import org.tensorflow.lite.support.tensorbuffer.TensorBuffer
@@ -73,10 +78,20 @@ class PreviewActivity : AppCompatActivity(), View.OnClickListener {
             binding.buttonSend.id -> {
                 Toast.makeText(this, "Processing", Toast.LENGTH_SHORT).show()
                 val index = getIndexLabelFromTfLite()
-                val label = getLabel(index)
-                Log.d(TAG, "Label: $label")
+
+                val watuDetail = listData[index]
+                watuDetail.imgUri = uri.toString()
+
+                moveToDetailActivity(watuDetail)
             }
         }
+    }
+
+    private fun moveToDetailActivity(data: WatuResource) {
+        val intent = Intent(this, DetailActivity::class.java)
+         intent.putExtra(EXTRA_WATU_DETAIL, data)
+
+        startActivity(intent)
     }
 
     override fun onSupportNavigateUp(): Boolean {
@@ -147,14 +162,6 @@ class PreviewActivity : AppCompatActivity(), View.OnClickListener {
         tfModel.close()
 
         return maxIndex
-    }
-
-    private fun getLabel(index: Int): String {
-        val labels = application.assets.open("mineral-label.txt").bufferedReader().use {
-            it.readText()
-        }.split("\n")
-
-        return labels[index]
     }
 
     private fun getBitmap(uri: Uri) =
