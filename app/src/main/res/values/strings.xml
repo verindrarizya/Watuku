@@ -6,4 +6,11 @@
     <string name="cancel">Cancel</string>
     <string name="preview">Preview</string>
     <string name="open_gallery_content_description">Open Gallery</string>
+    <string name="share">Share</string>
+    <string name="image_watu">Image Watu</string>
+    <string name="definition">Definition :</string>
+    <string name="usage">Usage :</string>
+    <string name="definition_">Muscovite is the most common mineral of the mica family. It is an important rock-forming mineral present in igneous, metamorphic, and sedimentary rocks. Like other micas it readily cleaves into thin transparent sheets. Muscovite sheets have a pearly to vitreous luster on their surface. If they are held up to the light, they are transparent and nearly colorless, but most have a slight brown, yellow, green, or rose-color tint.</string>
+    <string name="usage_">Muscovite has been used as a joint compound and also as ingredient of paint, drilling mud, making of plastics, rubber, asphalt roofing, cosmetics</string>
+
 </resources>
