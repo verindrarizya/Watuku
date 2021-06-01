@@ -96,6 +96,7 @@ class PreviewActivity : AppCompatActivity(), View.OnClickListener {
 
     override fun onSupportNavigateUp(): Boolean {
         deleteImage()
+        finish()
         return super.onSupportNavigateUp()
     }
 
@@ -124,9 +125,6 @@ class PreviewActivity : AppCompatActivity(), View.OnClickListener {
                 null,
                 null
         )
-
-        // then close this activity and back to camera
-        finish()
     }
 
     private fun getIndexLabelFromTfLite(): Int {
