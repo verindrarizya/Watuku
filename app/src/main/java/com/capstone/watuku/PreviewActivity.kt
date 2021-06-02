@@ -161,14 +161,12 @@ class PreviewActivity : AppCompatActivity(), View.OnClickListener {
 
         return maxIndex
     }
-
     private fun getBitmap(uri: Uri) =
-        if (Build.VERSION.SDK_INT > Build.VERSION_CODES.P) {
-            ImageDecoder.decodeBitmap(ImageDecoder.createSource(contentResolver, uri))
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.P) {
+            ImageDecoder.decodeBitmap(ImageDecoder.createSource(contentResolver, uri)).copy(Bitmap.Config.ARGB_8888, true)
         } else {
             MediaStore.Images.Media.getBitmap(contentResolver, uri)
         }
-
 
     companion object {
         private const val TAG = "CheckingPreviewActivity"
