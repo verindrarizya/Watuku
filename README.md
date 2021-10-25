@@ -3,7 +3,7 @@
 [![Build Status](https://img.shields.io/badge/platform-Android-green.svg)](http://developer.android.com/index.html)
 
 ## _Note_
-This is a prototype application because at the time we are not connect it to cloud, as it is not yet finished. So we deploy the tensorflow model inside this application and results of detail is provided by data dummy inside this application. But when the cloud is finished, we will integrate with it ASAP.
+This is a prototype application because at the time we are not connect it to cloud, as it is not yet finished.
 
 ## Overview
 Watuku is an application aimed to be used by university students, researchers, and professionals for mineral detection, intended to be fast, cost-saving, and accurate. This application use machine learning that is installed with the application on the phone to detect the mineral from an image taken from camera or chosen from gallery and then the cloud will provide the data of the detected mineral.
